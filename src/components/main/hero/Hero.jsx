@@ -131,13 +131,13 @@ function Hero() {
         <img 
           // src={
           //   slide.image && slide.image.trim() !== ""
-          //     ? `http://localhost:8000/storage/${slide.image}`
+          // //    ? `http://localhost:8000/storage/${slide.image}`
           //     : quranImg
           // }
           
           // src={
           //   firstImage && firstImage.trim() !== ""
-          //     ? `http://localhost:8000/storage/${firstImage}`
+           //   // ? `http://localhost:8000/storage/${firstImage}`
           //     : quranImg
           // }
 

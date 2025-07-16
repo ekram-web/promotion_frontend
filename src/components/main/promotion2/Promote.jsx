@@ -119,7 +119,7 @@ function Promotion() {
               <img
                 // src={
                 //   promotion && promotion.qr_code_image
-                //     ? `http://localhost:8000/storage/${promotion.qr_code_image}`
+                // //    ? `http://localhost:8000/storage/${promotion.qr_code_image}`
                 //     : qrImg
                 // }
 
@@ -160,7 +160,7 @@ function Promotion() {
               <img
                 // src={
                 //   promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
-                //     ? `http://localhost:8000/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
+                // //    ? `http://localhost:8000/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
                 //     : qrImg
                 // }
 

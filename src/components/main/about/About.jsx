@@ -20,7 +20,7 @@ export default function About() {
           <img
             src={
               aboutData && aboutData.image
-                ? `http://localhost:8000/storage/${aboutData.image}`
+                ? `http://https://besirad.basirahtv.com/storage/${aboutData.image}`
                 : aboutImg
             }
             alt="About Basirah"
