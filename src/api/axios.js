@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://api.basirahtv.com/api",
+  baseURL: "https://besirad.basirahtv.com/api",
   withCredentials: true,
 });
 
