@@ -135,9 +135,15 @@ function Hero() {
           //     : quranImg
           // }
           
+          // src={
+          //   firstImage && firstImage.trim() !== ""
+          //     ? `http://localhost:8000/storage/${firstImage}`
+          //     : quranImg
+          // }
+
           src={
             firstImage && firstImage.trim() !== ""
-              ? `http://localhost:8000/storage/${firstImage}`
+              ? `http://https://besirad.basirahtv.com/storage/${firstImage}`
               : quranImg
           }
           alt="Basirah App on Phone"

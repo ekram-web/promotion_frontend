@@ -58,8 +58,8 @@ export default function Contact() {
           <iframe
             title="Basirah Location Map"
             src={
-              mapData && mapData.mapUrl
-                ? mapData.mapUrl
+              mapData && mapData.map_embed_url
+                ? mapData.map_embed_url
                 : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.123456789012!2d-122.419415684681!3d37.774929279759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c8b8b8b8b%3A0x8b8b8b8b8b8b8b8b!2sBasirah%20Institute%20of%20Quranic%20Studies!5e0!3m2!1sen!2sus!4v1616161616161"
             }
             style={{

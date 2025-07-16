@@ -51,9 +51,15 @@ function Promotion() {
         >
           <div className={styles.frameInner}>
             <img
+              // src={
+              //   promotion && promotion.phone_image
+              //     ? `http://localhost:8000/storage/${promotion.phone_image}`
+              //     : screenImages[currentScreen]
+              // }
+
               src={
                 promotion && promotion.phone_image
-                  ? `http://localhost:8000/storage/${promotion.phone_image}`
+                  ? `http://https://besirad.basirahtv.com/storage/${promotion.phone_image}`
                   : screenImages[currentScreen]
               }
               alt="App screen"
@@ -111,9 +117,15 @@ function Promotion() {
             </a>
             <div className={styles.qrContainerSmall}>
               <img
+                // src={
+                //   promotion && promotion.qr_code_image
+                //     ? `http://localhost:8000/storage/${promotion.qr_code_image}`
+                //     : qrImg
+                // }
+
                 src={
                   promotion && promotion.qr_code_image
-                    ? `http://localhost:8000/storage/${promotion.qr_code_image}`
+                    ? `http://https://besirad.basirahtv.com/storage/${promotion.qr_code_image}`
                     : qrImg
                 }
                 alt="Download Basirah App QR"
@@ -146,9 +158,15 @@ function Promotion() {
             </a>
             <div className={styles.qrContainerSmall}>
               <img
+                // src={
+                //   promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
+                //     ? `http://localhost:8000/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
+                //     : qrImg
+                // }
+
                 src={
                   promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
-                    ? `http://localhost:8000/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
+                    ? `http://https://besirad.basirahtv.com/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
                     : qrImg
                 }
                 alt="Download Basirah App QR for Play Store"

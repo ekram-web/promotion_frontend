@@ -76,7 +76,9 @@ function Review() {
           role: review.role,
           text: review.text,
           img: review.image
-            ? `http://localhost:8000/storage/${review.image}`
+            // ? `http://localhost:8000/storage/${review.image}`
+            ? `http://https://besirad.basirahtv.com/storage/${review.image}`
+
             : ustazImg,
         }));
         setReviews(transformedReviews);
