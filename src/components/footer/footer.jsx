@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./footer.module.css";
 import logo from "../../assets/images/Basirah Full Color Transparent.png";
 import skylink from "../../assets/images/logo.png";
-import { FaFacebookF, FaTiktok, FaInstagram } from "react-icons/fa";
+import { FaFacebookF, FaTiktok, FaYoutube } from "react-icons/fa";
 import { fetchContactInfo } from "../../api/contactInfo";
 
 const navLinks = [
@@ -63,7 +63,7 @@ function Footer() {
           </div>
           <div className={styles.socials}>
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/khalidkibrom99?rdid=ZtyUXf5r8RKsmk4z&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F14DQxAusZ1N%2F#"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -71,7 +71,7 @@ function Footer() {
               <FaFacebookF size={24} />
             </a>
             <a
-              href="https://tiktok.com"
+              href="https://www.tiktok.com/@ustaz.khalid.kibr?is_from_webapp=1&sender_device=pc"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Tiktok"
@@ -79,12 +79,12 @@ function Footer() {
               <FaTiktok size={24} />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.youtube.com/@UstazKhalidKibromBasirahOffici"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram"
+              aria-label="youtube"
             >
-              <FaInstagram size={24} />
+              <FaYoutube size={24} />
             </a>
           </div>
         </div>
