@@ -129,21 +129,9 @@ function Hero() {
       <div className={styles.heroImageBox}>
         {/* <div className={styles.heroImageGlow}></div> */}
         <img 
-          // src={
-          //   slide.image && slide.image.trim() !== ""
-          // //    ? `http://localhost:8000/storage/${slide.image}`
-          //     : quranImg
-          // }
-          
-          // src={
-          //   firstImage && firstImage.trim() !== ""
-           //   // ? `http://localhost:8000/storage/${firstImage}`
-          //     : quranImg
-          // }
-
           src={
             firstImage && firstImage.trim() !== ""
-              ? `http://https://besirad.basirahtv.com/storage/${firstImage}`
+              ? `/storage/${firstImage}`
               : quranImg
           }
           alt="Basirah App on Phone"
