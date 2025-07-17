@@ -131,7 +131,7 @@ function Hero() {
         <img 
           src={
             firstImage && firstImage.trim() !== ""
-              ? `/storage/${firstImage}`
+              ? `https://besirad.basirahtv.com/storage/${firstImage}`
               : quranImg
           }
           alt="Basirah App on Phone"

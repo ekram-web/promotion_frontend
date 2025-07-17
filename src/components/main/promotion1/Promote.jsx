@@ -70,7 +70,7 @@ function Promotion() {
           <img
             src={
               promotion && promotion.qr_code_image
-                ? `http://localhost:8000/storage/${promotion.qr_code_image}`
+                ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image}`
                 : qrImg
             }
             alt="Download Basirah App QR"

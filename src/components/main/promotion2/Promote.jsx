@@ -59,7 +59,7 @@ function Promotion() {
 
               src={
                 promotion && promotion.phone_image
-                  ? `/storage/${promotion.phone_image}`
+                  ? `https://besirad.basirahtv.com/storage/${promotion.phone_image}`
                   : screenImages[currentScreen]
               }
               alt="App screen"
@@ -125,7 +125,7 @@ function Promotion() {
 
                 src={
                   promotion && promotion.qr_code_image
-                    ? `/storage/${promotion.qr_code_image}`
+                    ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image}`
                     : qrImg
                 }
                 alt="Download Basirah App QR"
@@ -166,7 +166,7 @@ function Promotion() {
 
                 src={
                   promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
-                    ? `/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
+                    ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
                     : qrImg
                 }
                 alt="Download Basirah App QR for Play Store"
