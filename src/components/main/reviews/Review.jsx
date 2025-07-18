@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./review.module.css";
+import styles from "./Review.module.css";
 import ustazImg from "../../../assets/images/ustaz/ustaz_k.png";
 import { fetchReviews } from "../../../api/reviews";
 
