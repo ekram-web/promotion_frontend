@@ -58,7 +58,7 @@ function Footer() {
               : "123 Qur'anic Studies Ave, City, Country"}
           </div>
           <div className={styles.footerPhone}>
-            <strong>Phone no:</strong>
+            <strong>Phone number:</strong>
             {footerData && footerData.phone ? footerData.phone : "123-456-7890"}
           </div>
           <div className={styles.socials}>
