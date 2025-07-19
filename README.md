@@ -1,56 +1,52 @@
-# Promo Frontend
+# 🌑 BasirahTV Frontend (Vite + React)
 
-## Deployment Instructions
+Welcome to the **BasirahTV Frontend** – a stunning, dark-themed, and animated web app built with React and Vite. This project consumes the BasirahTV API and delivers a seamless, modern user experience.
 
-### Prerequisites
-- Node.js & npm
-- (Optional) Docker
+---
 
-### Manual Deployment Steps
+## 🛠️ Tech Stack
+- **Framework:** React (with Vite)
 
-1. **Navigate to frontend directory:**
-   ```sh
-   cd frontend
-   ```
-2. **Install dependencies:**
-   ```sh
-   npm install
-   ```
-3. **Configure environment variables:**
-   - Create a `.env` file (if needed) for API URLs, e.g.:
-     ```
-     VITE_API_URL=http://localhost:8000/api
-     ```
-4. **Build the app:**
-   ```sh
-   npm run build
-   ```
-5. **Serve the build:**
-   - For local testing:
-     ```sh
-     npm install -g serve
-     serve -s dist
-     ```
-   - For production:  
-     Deploy the `dist/` folder to your web server (e.g., Nginx, Apache, Vercel, Netlify).
+- **Animations:** Framer Motion
+- **API:** Consumes Laravel backend
+- **Deployment:** GitHub Actions + cPanel (FTP/SFTP)
 
-### Docker Deployment (Optional)
+---
 
-**Create a `Dockerfile` in `frontend/`:**
-```dockerfile
-FROM node:20-alpine AS build
-WORKDIR /app
-COPY . .
-RUN npm install && npm run build
+## ✨ Features
+- Blazing-fast Vite build
+- Responsive, mobile-first
+- Animated UI for a premium feel
+- API-driven: almost content comes from the backend
+- Auto-deploy on push to `main` branch
 
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+---
+
+## 🚦 Quick Start
+
+```bash
+npm install
+npm run dev
 ```
+- Access at `http://localhost:5173`
+- Update API URLs in `src/api/axios.js` if needed
 
-**To build and run:**
-```sh
-docker build -t promo-frontend .
-docker run -p 3000:80 promo-frontend
-```
+---
+
+## 🚀 Deployment
+- Auto-deploys to [basirahtv.com](https://basirahtv.com) via GitHub Actions
+- See root `DEPLOYMENT_STEPS.md` for full workflow
+
+---
+
+## 🦄 Why This Frontend Stands Out
+- Modern stack, beautiful UI, and professional CI/CD
+- Built to impress employers and users alike
+
+---
+
+
+
+---
+
+> "Beautiful frontend. Lightning fast. Always up to date."
