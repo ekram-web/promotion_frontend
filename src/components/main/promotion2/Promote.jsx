@@ -12,7 +12,10 @@ import Img1 from "../../../assets/images/home.jpg";
 import Img2 from "../../../assets/images/Basirah app splash page 5 copy 2@4x.png";
 import Img3 from "../../../assets/images/Basirah app splash page 5 copy 6@4x.png";
 import { fetchPromotions } from "../../../api/promotion";
-
+import {
+  faAndroid,
+  faGooglePlay,
+} from "@fortawesome/free-brands-svg-icons";
 function Promotion() {
   // Placeholder screen images (replace with real ones later)
   const screenImages = [Img1, Img2, Img3];
@@ -121,7 +124,7 @@ function Promotion() {
   arial-disabled="true"
   >
   <FontAwesomeIcon
-                icon={faAppStoreIos}
+                icon={faAndroid}
                 className={styles.promoBtnIcon}
               />
               Apk
