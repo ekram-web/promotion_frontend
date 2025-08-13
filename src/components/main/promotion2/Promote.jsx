@@ -110,13 +110,14 @@ function Promotion() {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.promoDownloadBtn}
-              arial-disabled="true"
+              download="Basirah.apk"
+              // arial-disabled="true"
             >
               <FontAwesomeIcon
                 icon={faAndroid}
                 className={styles.promoBtnIcon}
               />
-              Apk
+              APK
             </a>
 
             <div className={styles.qrContainerSmall}>
