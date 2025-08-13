@@ -101,39 +101,26 @@ function Promotion() {
               alignItems: "center",
             }}
           >
-            {/* <a
+            <a
               href={
-                promotion ? promotion.app_store_url : "https://apps.apple.com/"
+                promotion
+                  ? promotion.app_store_url
+                  : "https://www.dropbox.com/scl/fi/fhpf52av4xbxg1smmn7kq/Basirah.apk?rlkey=mmoie793l1hdufsefwwaudzit&st=gv5sdsyp&dl=1"
               }
               target="_blank"
               rel="noopener noreferrer"
               className={styles.promoDownloadBtn}
+              arial-disabled="true"
             >
               <FontAwesomeIcon
-                icon={faAppStoreIos}
+                icon={faAndroid}
                 className={styles.promoBtnIcon}
               />
-              App Store
-            </a> */}
-
-            <div>
-              <div className={styles.promoDownloadBtn} arial-disabled="true">
-                <FontAwesomeIcon
-                  icon={faAndroid}
-                  className={styles.promoBtnIcon}
-                />
-                Apk
-              </div>
-            </div>
+              Apk
+            </a>
 
             <div className={styles.qrContainerSmall}>
               <img
-                // src={
-                //   promotion && promotion.qr_code_image
-                // //    ? `http://localhost:8000/storage/${promotion.qr_code_image}`
-                //     : qrImg
-                // }
-
                 src={
                   promotion && promotion.qr_code_image
                     ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image}`
@@ -149,6 +136,7 @@ function Promotion() {
               <div className={styles.qrLabelSmall}>Scan</div>
             </div>
           </div>
+
           <div
             style={{
               display: "flex",
