@@ -4,10 +4,7 @@ import phoImg from "../../../assets/images/pho.png";
 import qrImg from "../../../assets/images/qr.jpg";
 import skylinkLogo from "../../../assets/skylink.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAppStoreIos,
-  faGooglePlay,
-} from "@fortawesome/free-brands-svg-icons";
+
 import Img1 from "../../../assets/images/home.jpg";
 import Img2 from "../../../assets/images/Basirah app splash page 5 copy 2@4x.png";
 import Img3 from "../../../assets/images/Basirah app splash page 5 copy 6@4x.png";
