@@ -12,10 +12,7 @@ import Img1 from "../../../assets/images/home.jpg";
 import Img2 from "../../../assets/images/Basirah app splash page 5 copy 2@4x.png";
 import Img3 from "../../../assets/images/Basirah app splash page 5 copy 6@4x.png";
 import { fetchPromotions } from "../../../api/promotion";
-import {
-  faAndroid,
-  faGooglePlay,
-} from "@fortawesome/free-brands-svg-icons";
+import { faAndroid, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 function Promotion() {
   // Placeholder screen images (replace with real ones later)
   const screenImages = [Img1, Img2, Img3];
@@ -67,7 +64,10 @@ function Promotion() {
               }
               alt="App screen"
               className={styles.frameImage}
-              onError={e => { e.target.onerror = null; e.target.src = screenImages[currentScreen]; }}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = screenImages[currentScreen];
+              }}
             />
           </div>
         </div>
@@ -119,17 +119,15 @@ function Promotion() {
               App Store
             </a> */}
 
-<div>
-  <div className={styles.promoDownloadBtn}
-  arial-disabled="true"
-  >
-  <FontAwesomeIcon
-                icon={faAndroid}
-                className={styles.promoBtnIcon}
-              />
-              Apk
-  </div>
-</div>
+            <div>
+              <div className={styles.promoDownloadBtn} arial-disabled="true">
+                <FontAwesomeIcon
+                  icon={faAndroid}
+                  className={styles.promoBtnIcon}
+                />
+                Apk
+              </div>
+            </div>
 
             <div className={styles.qrContainerSmall}>
               <img
@@ -146,7 +144,10 @@ function Promotion() {
                 }
                 alt="Download Basirah App QR"
                 className={styles.qrImageSmall}
-                onError={e => { e.target.onerror = null; e.target.src = qrImg; }}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = qrImg;
+                }}
               />
               <div className={styles.qrLabelSmall}>Scan</div>
             </div>
@@ -182,13 +183,21 @@ function Promotion() {
                   // }
 
                   src={
-                    promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
-                      ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
+                    promotion &&
+                    (promotion.qr_code_image_playstore ||
+                      promotion.qr_code_image)
+                      ? `https://besirad.basirahtv.com/storage/${
+                          promotion.qr_code_image_playstore ||
+                          promotion.qr_code_image
+                        }`
                       : qrImg
                   }
                   alt="Download Basirah App QR for Play Store"
                   className={styles.qrImageSmall}
-                  onError={e => { e.target.onerror = null; e.target.src = qrImg; }}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = qrImg;
+                  }}
                 />
                 <div className={styles.qrOverlay}>
                   <span>Coming soon</span>
