@@ -139,6 +139,34 @@
   opacity: 0.85;
   margin-top: 0.1rem;
 }
+
+.qrImageSmallBlurred {
+  position: relative;
+  display: inline-block;
+}
+
+.qrImageSmallBlurred .qrImageSmall {
+  filter: blur(3px);
+  opacity: 0.6;
+}
+
+.qrOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(1, 173, 136, 0.9);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
 .animatedSvg {
   color: #7a4fff;
   animation: svgFloat 3.5s ease-in-out infinite, svgPulse 2.5s ease-in-out infinite;

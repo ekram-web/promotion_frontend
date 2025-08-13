@@ -154,25 +154,30 @@ function Promotion() {
                 icon={faGooglePlay}
                 className={styles.promoBtnIcon}
               />
-              Play Store
+              APK
             </a>
             <div className={styles.qrContainerSmall}>
-              <img
-                // src={
-                //   promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
-                // //    ? `http://localhost:8000/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
-                //     : qrImg
-                // }
+              <div className={styles.qrImageSmallBlurred}>
+                <img
+                  // src={
+                  //   promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
+                  // //    ? `http://localhost:8000/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
+                  //     : qrImg
+                  // }
 
-                src={
-                  promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
-                    ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
-                    : qrImg
-                }
-                alt="Download Basirah App QR for Play Store"
-                className={styles.qrImageSmall}
-                onError={e => { e.target.onerror = null; e.target.src = qrImg; }}
-              />
+                  src={
+                    promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
+                      ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
+                      : qrImg
+                  }
+                  alt="Download Basirah App QR for Play Store"
+                  className={styles.qrImageSmall}
+                  onError={e => { e.target.onerror = null; e.target.src = qrImg; }}
+                />
+                <div className={styles.qrOverlay}>
+                  <span>Coming soon</span>
+                </div>
+              </div>
               <div className={styles.qrLabelSmall}>Scan</div>
             </div>
           </div>
