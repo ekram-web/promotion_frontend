@@ -155,7 +155,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(1, 173, 136, 0.9);
+  background: rgba(4, 141, 111, 0.9);
   color: white;
   padding: 0.3rem 0.6rem;
   border-radius: 0.5rem;
@@ -227,6 +227,10 @@
   padding: 0.7rem 1.4rem;
   font-size: 1rem;
   border-radius: 1rem;
+}
+.promoDownloadBtn[aria-disabled="true"] {
+  pointer-events: none;
+  cursor: default;
 }
 .promoBtnIcon {
   font-size: 1.1rem;

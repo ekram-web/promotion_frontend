@@ -101,7 +101,7 @@ function Promotion() {
               alignItems: "center",
             }}
           >
-            <a
+            {/* <a
               href={
                 promotion ? promotion.app_store_url : "https://apps.apple.com/"
               }
@@ -114,7 +114,20 @@ function Promotion() {
                 className={styles.promoBtnIcon}
               />
               App Store
-            </a>
+            </a> */}
+
+<div>
+  <div className={styles.promoDownloadBtn}
+  arial-disabled="true"
+  >
+  <FontAwesomeIcon
+                icon={faAppStoreIos}
+                className={styles.promoBtnIcon}
+              />
+              Apk
+  </div>
+</div>
+
             <div className={styles.qrContainerSmall}>
               <img
                 // src={
@@ -154,7 +167,7 @@ function Promotion() {
                 icon={faGooglePlay}
                 className={styles.promoBtnIcon}
               />
-              APK
+              Play Store
             </a>
             <div className={styles.qrContainerSmall}>
               <div className={styles.qrImageSmallBlurred}>
