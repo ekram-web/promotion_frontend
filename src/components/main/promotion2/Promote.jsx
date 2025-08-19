@@ -201,7 +201,6 @@
 // export default Promotion;
 
 // ??
-
 import React, { useEffect, useState } from "react";
 import styles from "./promote.module.css";
 import qrImg from "../../../assets/images/qr.jpg";
@@ -210,17 +209,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAndroid, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import { fetchPromotions } from "../../../api/promotion";
 
-// STEP 1: Import your local video and a single fallback image.
-// Make sure this path is 100% correct.
-import promoVideo from "../../../assets/video.mp4"; // A local video file
-import fallbackImage from "../../../assets/images/home.jpg"; // A static image if the video fails
-
 function Promotion() {
-  // --- All state related to rotation (isRotating, currentScreen) has been REMOVED. ---
   const [promotion, setPromotion] = useState(null);
-  const [videoHasError, setVideoHasError] = useState(false);
 
-  // This useEffect ONLY fetches data. The rotation timer is gone.
   useEffect(() => {
     fetchPromotions()
       .then((res) => {
@@ -229,41 +220,29 @@ function Promotion() {
       .catch(() => setPromotion(null));
   }, []);
 
+  // IMPORTANT: This is now a simple text string pointing to the video
+  // in your public folder. Make sure the filename matches exactly.
+  const videoSrc = "/videos/promo-video.mp4";
+
   return (
     <section className={styles.promotionBest} id="app">
       <div className={styles.leftSection}>
-        {/*
-          STEP 2: The className is now STABLE. 
-          The logic for adding the "styles.rotate" class has been completely removed.
-        */}
+        {/* The frame is stable, no animation classes are used */}
         <div className={styles.frame} style={{ width: 220, height: 440 }}>
           <div className={styles.frameInner}>
             {/* 
-              STEP 3: This logic now correctly displays the video or a STATIC image.
-              It will no longer show the animating image carousel.
+              This is now a direct <video> tag.
+              There is NO fallback to an image. We are forcing it
+              to only show the video.
             */}
-            {!videoHasError ? (
-              <video
-                className={styles.frameImage} // Use same style class
-                src={promoVideo} // Use imported local video
-                autoPlay
-                loop
-                muted
-                playsInline
-                onError={() => {
-                  console.error(
-                    "Video failed to load. Displaying fallback image."
-                  );
-                  setVideoHasError(true);
-                }}
-              />
-            ) : (
-              <img
-                src={fallbackImage} // If video fails, show a single, static image
-                alt="App screen"
-                className={styles.frameImage}
-              />
-            )}
+            <video
+              className={styles.frameImage} // Uses your existing CSS
+              src="../../../assets/video.mp4" // The direct path from the public folder
+              autoPlay
+              loop
+              muted
+              playsInline // Very important for mobile browsers
+            />
           </div>
         </div>
         <div className={styles.poweredBySkylink}>
@@ -294,6 +273,7 @@ function Promotion() {
             : "Experience seamless learning and teaching—anytime, anywhere."}
         </div>
         <div className={styles.downloadRow}>
+          {/* All your button and QR code JSX stays here */}
           <div
             style={{
               display: "flex",
