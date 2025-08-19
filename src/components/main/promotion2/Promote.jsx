@@ -207,21 +207,20 @@ import styles from "./promote.module.css";
 import qrImg from "../../../assets/images/qr.jpg";
 import skylinkLogo from "../../../assets/skylink.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import Img1 from "../../../assets/images/home.jpg";
-// Import your video file from the assets folder
-// IMPORTANT: Update the path and filename to match your video file.
-import promoVideo from "../../../assets/video"; // <--- ADD THIS LINE
-
-import { fetchPromotions } from "../../../api/promotion";
 import { faAndroid, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
+import { fetchPromotions } from "../../../api/promotion";
+
+// STEP 1: Import your local video and a single fallback image.
+// Make sure this path is 100% correct.
+import promoVideo from "../../../assets/video.mp4"; // A local video file
+import fallbackImage from "../../../assets/images/home.jpg"; // A static image if the video fails
 
 function Promotion() {
-  const screenImages = [Img1]; // Default fallback image
+  // --- All state related to rotation (isRotating, currentScreen) has been REMOVED. ---
   const [promotion, setPromotion] = useState(null);
-  const [videoError, setVideoError] = useState(false);
+  const [videoHasError, setVideoHasError] = useState(false);
 
-  // Fetch promotion data from API (remains the same)
+  // This useEffect ONLY fetches data. The rotation timer is gone.
   useEffect(() => {
     fetchPromotions()
       .then((res) => {
@@ -230,46 +229,39 @@ function Promotion() {
       .catch(() => setPromotion(null));
   }, []);
 
-  // The video source is now the locally imported file.
-  const videoSrc = promoVideo;
-
   return (
     <section className={styles.promotionBest} id="app">
       <div className={styles.leftSection}>
+        {/*
+          STEP 2: The className is now STABLE. 
+          The logic for adding the "styles.rotate" class has been completely removed.
+        */}
         <div className={styles.frame} style={{ width: 220, height: 440 }}>
           <div className={styles.frameInner}>
             {/* 
-              This logic now checks if the video has failed.
-              If not, it renders the <video> tag with the local video.
-              Otherwise, it falls back to the <img> tag.
+              STEP 3: This logic now correctly displays the video or a STATIC image.
+              It will no longer show the animating image carousel.
             */}
-            {!videoError ? (
+            {!videoHasError ? (
               <video
-                src={videoSrc} // Use the imported video source
-                className={styles.frameImage}
+                className={styles.frameImage} // Use same style class
+                src={promoVideo} // Use imported local video
                 autoPlay
                 loop
                 muted
                 playsInline
                 onError={() => {
-                  console.error("Local video failed to load.");
-                  setVideoError(true);
+                  console.error(
+                    "Video failed to load. Displaying fallback image."
+                  );
+                  setVideoHasError(true);
                 }}
               />
             ) : (
               <img
-                // The fallback image can still come from the API or a local asset
-                src={
-                  promotion && promotion.phone_image
-                    ? `https://besirad.basirahtv.com/storage/${promotion.phone_image}`
-                    : screenImages[0]
-                }
+                src={fallbackImage} // If video fails, show a single, static image
                 alt="App screen"
                 className={styles.frameImage}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = screenImages[0];
-                }}
               />
             )}
           </div>
@@ -283,8 +275,9 @@ function Promotion() {
           />
         </div>
       </div>
+
+      {/* The rest of your component remains the same */}
       <div className={styles.promoRight}>
-        {/* ...The rest of your JSX remains exactly the same... */}
         <h2
           className={styles.promoHeadline}
           style={{ fontFamily: "'Merriweather', serif", fontWeight: "600" }}
@@ -374,7 +367,7 @@ function Promotion() {
                       promotion.qr_code_image)
                       ? `https://besirad.basirahtv.com/storage/${
                           promotion.qr_code_image_playstore ||
-                          promotion.qr__code_image
+                          promotion.qr_code_image
                         }`
                       : qrImg
                   }
