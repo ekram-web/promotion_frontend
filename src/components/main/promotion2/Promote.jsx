@@ -203,50 +203,49 @@
 // ??
 import React, { useEffect, useState } from "react";
 import styles from "./promote.module.css";
+
+// Your asset imports
 import qrImg from "../../../assets/images/qr.jpg";
 import skylinkLogo from "../../../assets/skylink.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAndroid, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import { fetchPromotions } from "../../../api/promotion";
 
+// CORRECT: Importing the video from your assets folder
+import promoVideo from "../../../assets/video.mp4";
+
 function Promotion() {
+  // RESTORED: The state for your backend data is back
   const [promotion, setPromotion] = useState(null);
 
+  // RESTORED: The useEffect to fetch data from your API is back
   useEffect(() => {
     fetchPromotions()
       .then((res) => {
         setPromotion(Array.isArray(res.data) ? res.data[0] : res.data);
       })
       .catch(() => setPromotion(null));
-  }, []);
-
-  // IMPORTANT: This is now a simple text string pointing to the video
-  // in your public folder. Make sure the filename matches exactly.
-  const videoSrc = "/videos/promo-video.mp4";
+  }, []); // The empty array [] means this runs only once when the component loads
 
   return (
     <section className={styles.promotionBest} id="app">
       <div className={styles.leftSection}>
-        {/* The frame is stable, no animation classes are used */}
+        {/* The frame is stable with no animation */}
         <div className={styles.frame} style={{ width: 220, height: 440 }}>
           <div className={styles.frameInner}>
-            {/* 
-              This is now a direct <video> tag.
-              There is NO fallback to an image. We are forcing it
-              to only show the video.
-            */}
+            {/* WORKING: The video tag using the imported video file */}
             <video
-              className={styles.frameImage} // Uses your existing CSS
-              src="../../../assets/video.mp4" // The direct path from the public folder
+              className={styles.frameImage}
+              src={promoVideo}
               autoPlay
               loop
               muted
-              playsInline // Very important for mobile browsers
+              playsInline
             />
           </div>
         </div>
         <div className={styles.poweredBySkylink}>
-          <span>Powered-by</span>
+          <span>Powered by</span>
           <img
             src={skylinkLogo}
             alt="Skylink logo"
@@ -255,14 +254,15 @@ function Promotion() {
         </div>
       </div>
 
-      {/* The rest of your component remains the same */}
       <div className={styles.promoRight}>
+        {/* RESTORED: Headline now uses data from the backend */}
         <h2
           className={styles.promoHeadline}
           style={{ fontFamily: "'Merriweather', serif", fontWeight: "600" }}
         >
           {promotion ? promotion.title : "Get the Basirah App"}
         </h2>
+        {/* RESTORED: Subtitle now uses data from the backend */}
         <div
           className={styles.promoBenefit}
           style={{ fontFamily: "'Inter', sans-serif", fontWeight: "400" }}
@@ -273,7 +273,6 @@ function Promotion() {
             : "Experience seamless learning and teaching—anytime, anywhere."}
         </div>
         <div className={styles.downloadRow}>
-          {/* All your button and QR code JSX stays here */}
           <div
             style={{
               display: "flex",
@@ -281,6 +280,7 @@ function Promotion() {
               alignItems: "center",
             }}
           >
+            {/* RESTORED: Download link now uses data from the backend */}
             <a
               href={
                 promotion
@@ -299,6 +299,7 @@ function Promotion() {
               APK
             </a>
 
+            {/* RESTORED: QR Code now uses data from the backend */}
             <div className={styles.qrContainerSmall}>
               <img
                 src={
@@ -324,6 +325,7 @@ function Promotion() {
               alignItems: "center",
             }}
           >
+            {/* RESTORED: Play Store link now uses data from the backend */}
             <a
               href={
                 promotion ? promotion.play_store_url : "https://apps.apple.com/"
@@ -338,6 +340,7 @@ function Promotion() {
               />
               Play Store
             </a>
+            {/* RESTORED: Play Store QR Code now uses data from the backend */}
             <div className={styles.qrContainerSmall}>
               <div className={styles.qrImageSmallBlurred}>
                 <img
