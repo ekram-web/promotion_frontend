@@ -246,7 +246,7 @@ function Promotion() {
           </div>
         </div>
         <div className={styles.poweredBySkylink}>
-          <span>Powered by</span>
+          <span>Powered-by</span>
           <img
             src={skylinkLogo}
             alt="Skylink logo"
