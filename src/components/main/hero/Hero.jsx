@@ -39,7 +39,7 @@ function Hero() {
   useEffect(() => {
     fetchHero()
       .then((res) => {
-        console.log('Hero API response:', res.data);
+        // console.log('Hero API response:', res.data);
         if (res.data && res.data.length > 0) {
           setSlides(res.data);
         } else {
@@ -48,7 +48,7 @@ function Hero() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Hero API error:', error);
+        // console.error('Hero API error:', error);
         setSlides(fallbackSlides);
         setLoading(false);
       });
@@ -56,7 +56,7 @@ function Hero() {
 
   useEffect(() => {
     if (slides.length === 0) return;
-    
+
     timeoutRef.current = setTimeout(() => {
       setTextFade("textFadeOut");
       setVertical(true);
@@ -74,7 +74,9 @@ function Hero() {
       <section
         id="hero"
         className={styles.heroRedesign}
-        style={{ background: "linear-gradient(120deg, #042048 60%, #01AD88 100%)" }}
+        style={{
+          background: "linear-gradient(120deg, #042048 60%, #01AD88 100%)",
+        }}
       >
         <div className={styles.heroText} style={{ textAlign: "left" }}>
           <h1
@@ -85,21 +87,17 @@ function Hero() {
           </h1>
         </div>
         <div className={styles.heroImageBox}>
-          <img 
-            src={quranImg}
-            alt="Basirah App"
-            className={styles.heroImage}
-          />
+          <img src={quranImg} alt="Basirah App" className={styles.heroImage} />
         </div>
       </section>
     );
   }
 
   const slide = slides[current];
-  
-  console.log('Current slide:', slide);
-  console.log('Slide image value:', slide.image);
-  console.log('Image condition result:', slide.image && slide.image.trim() !== "");
+
+  // console.log('Current slide:', slide);
+  // console.log('Slide image value:', slide.image);
+  // console.log('Image condition result:', slide.image && slide.image.trim() !== "");
 
   // to get the fist imgae
   const firstImage = slides[0]?.image;
@@ -108,7 +106,12 @@ function Hero() {
     <section
       id="hero"
       className={styles.heroRedesign}
-      style={{ background: slide.background_gradient || slide.bg || "linear-gradient(120deg, #042048 60%, #01AD88 100%)" }}
+      style={{
+        background:
+          slide.background_gradient ||
+          slide.bg ||
+          "linear-gradient(120deg, #042048 60%, #01AD88 100%)",
+      }}
     >
       <div className={styles.heroText} style={{ textAlign: "left" }}>
         <h1
@@ -128,7 +131,7 @@ function Hero() {
       </div>
       <div className={styles.heroImageBox}>
         {/* <div className={styles.heroImageGlow}></div> */}
-        <img 
+        <img
           src={
             firstImage && firstImage.trim() !== ""
               ? `https://besirad.basirahtv.com/storage/${firstImage}`
