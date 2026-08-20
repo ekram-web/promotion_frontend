@@ -1,149 +1,215 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Hero.module.css";
-import quranImg from "../../../assets/images/quran.png";
+
+// Three Photoroom phone cutouts (Fallbacks)
+import defaultPhoneOne from "../../../assets/images/besira_one-Photoroom.png";
+import defaultPhoneTwo from "../../../assets/images/besira_two-Photoroom.png";
+import defaultPhoneThree from "../../../assets/images/besira_three-Photoroom.png";
+
 import { fetchHero } from "../../../api/hero";
 
-// Fallback slides in case API fails
-const fallbackSlides = [
+// 4 rotating Quranic verses (Default fallback)
+const defaultVerses = [
   {
-    title: "Empower Your Qur'anic Journey",
-    subtitle:
-      "Learn, connect, and grow with Basirah Institute's modern tools and global community.",
-    background_gradient: "linear-gradient(120deg, #042048 60%, #01AD88 100%)",
-    image: null,
+    ar: "وَقُل رَّبِّ زِدْنِي عِلْمًا",
+    en: '"And say: My Lord, increase me in knowledge."',
+    ref: "— Surah Taha, 20:114",
   },
   {
-    title: "Expert Teachers, Authentic Resources",
-    subtitle:
-      "Access certified scholars, interactive lessons, and a supportive learning environment—anytime, anywhere.",
-    background_gradient: "linear-gradient(120deg, #042048 60%, #01AD88 100%)",
-    image: null,
+    ar: "إِنَّمَا يَخْشَى اللَّهَ مِنْ عِبَادِهِ الْعُلَمَاءُ",
+    en: '"Indeed, those who fear Allah among His servants are the knowledgeable."',
+    ref: "— Surah Fatir, 35:28",
   },
   {
-    title: "Interactive Learning, Real Progress",
-    subtitle:
-      "Track your Qur'anic studies, join live classes, and connect with a global community—all in one app.",
-    background_gradient: "linear-gradient(120deg, #042048 60%, #01AD88 100%)",
-    image: null,
+    ar: "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",
+    en: '"Read in the name of your Lord who created."',
+    ref: "— Surah Al-Alaq, 96:1",
+  },
+  {
+    ar: "وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ",
+    en: '"And We send down of the Quran that which is healing and mercy."',
+    ref: "— Surah Al-Isra, 17:82",
   },
 ];
 
 function Hero() {
-  const [slides, setSlides] = useState(fallbackSlides);
-  const [loading, setLoading] = useState(true);
+  const [verses, setVerses] = useState(defaultVerses);
   const [current, setCurrent] = useState(0);
-  const [vertical, setVertical] = useState(false);
-  const timeoutRef = useRef(null);
-  const [textFade, setTextFade] = useState("textFadeIn");
+  const [fade, setFade] = useState(true); // true = visible
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    fetchHero()
-      .then((res) => {
-        // console.log('Hero API response:', res.data);
-        if (res.data && res.data.length > 0) {
-          setSlides(res.data);
-        } else {
-          setSlides(fallbackSlides);
+    const getHeroData = async () => {
+      try {
+        const response = await fetchHero();
+        if (response.data && response.data.length > 0) {
+          // Only use API data if it has the new fields (ar, en, ref)
+          if (response.data[0].ar) {
+            setVerses(response.data);
+          } else {
+            console.warn("API returned legacy data for Hero. Using fallback.");
+          }
         }
-        setLoading(false);
-      })
-      .catch((error) => {
-        // console.error('Hero API error:', error);
-        setSlides(fallbackSlides);
-        setLoading(false);
-      });
+      } catch (error) {
+        console.error("Error fetching hero data", error);
+      }
+    };
+    getHeroData();
   }, []);
 
-  useEffect(() => {
-    if (slides.length === 0) return;
-
-    timeoutRef.current = setTimeout(() => {
-      setTextFade("textFadeOut");
-      setVertical(true);
+  // Auto-rotate every 8 seconds
+  const startTimer = () => {
+    clearTimeout(timerRef.current);
+    if (verses.length <= 1) return;
+    
+    timerRef.current = setTimeout(() => {
+      // Fade out
+      setFade(false);
       setTimeout(() => {
-        setCurrent((prev) => (prev + 1) % slides.length);
-        setVertical(false);
-        setTextFade("textFadeIn");
-      }, 1200); // duration of vertical slide and fade
-    }, 3000); // interval between slides
-    return () => clearTimeout(timeoutRef.current);
-  }, [current, slides.length]);
+        setCurrent((prev) => (prev + 1) % verses.length);
+        setFade(true);
+      }, 500);
+    }, 8000);
+  };
 
-  if (loading) {
-    return (
-      <section
-        id="hero"
-        className={styles.heroRedesign}
-        style={{
-          background: "linear-gradient(120deg, #042048 60%, #01AD88 100%)",
-        }}
-      >
-        <div className={styles.heroText} style={{ textAlign: "left" }}>
-          <h1
-            className={styles.heroTitle}
-            style={{ fontFamily: "'Merriweather', serif", fontWeight: "600" }}
-          >
-            Loading...
-          </h1>
-        </div>
-        <div className={styles.heroImageBox}>
-          <img src={quranImg} alt="Basirah App" className={styles.heroImage} />
-        </div>
-      </section>
-    );
-  }
+  useEffect(() => {
+    startTimer();
+    return () => clearTimeout(timerRef.current);
+  }, [current, verses]);
 
-  const slide = slides[current];
+  const goTo = (index) => {
+    if (index === current) return;
+    clearTimeout(timerRef.current);
+    setFade(false);
+    setTimeout(() => {
+      setCurrent(index);
+      setFade(true);
+    }, 400);
+  };
 
-  // console.log('Current slide:', slide);
-  // console.log('Slide image value:', slide.image);
-  // console.log('Image condition result:', slide.image && slide.image.trim() !== "");
+  if (verses.length === 0) return null;
 
-  // to get the fist imgae
-  const firstImage = slides[0]?.image;
+  const v = verses[current];
+
+  const getPhoneImage = (url, fallback) => {
+    // We use the production URL for deployment
+    return url ? `https://besirad.basirahtv.com/storage/${url}` : fallback;
+  };
 
   return (
-    <section
-      id="hero"
-      className={styles.heroRedesign}
-      style={{
-        background:
-          slide.background_gradient ||
-          slide.bg ||
-          "linear-gradient(120deg, #042048 60%, #01AD88 100%)",
-      }}
-    >
-      <div className={styles.heroText} style={{ textAlign: "left" }}>
-        <h1
-          key={slide.title}
-          className={styles.heroTitle + " " + styles[textFade]}
-          style={{ fontFamily: "'Merriweather', serif", fontWeight: "600" }}
-        >
-          {slide.title}
-        </h1>
-        <p
-          key={slide.subtitle}
-          className={styles.heroSubtitle + " " + styles[textFade]}
-          style={{ fontFamily: "'Inter', sans-serif", fontWeight: "400" }}
-        >
-          {slide.subtitle}
-        </p>
+    <section className={styles.hero} id="hero">
+      {/* ── Background Layers ── */}
+      <div className={styles.calligraphyWatermark} aria-hidden="true">
+        بصيرة
       </div>
-      <div className={styles.heroImageBox}>
-        {/* <div className={styles.heroImageGlow}></div> */}
-        <img
-          src={
-            firstImage && firstImage.trim() !== ""
-              ? `https://besirad.basirahtv.com/storage/${firstImage}`
-              : quranImg
-          }
-          alt="Basirah App on Phone"
-          className={
-            styles.heroImage +
-            " " +
-            (vertical ? styles.slideUp : styles.slideDown)
-          }
-        />
+      <div className={styles.geoGrid}></div>
+      <div className={`${styles.orb} ${styles.orbGreen}`}></div>
+      <div className={`${styles.orb} ${styles.orbTeal}`}></div>
+      <div className={`${styles.orb} ${styles.orbGold}`}></div>
+
+      {/* ── Rotating Quran Verse (TOP) ── */}
+      <div className={styles.heroContent}>
+        <p
+          className={styles.verseArabic}
+          style={{
+            opacity: fade ? 1 : 0,
+            transform: fade ? "translateY(0)" : "translateY(12px)",
+            transition: "opacity 0.8s ease, transform 0.8s ease",
+          }}
+        >
+          {v.ar || defaultVerses[current]?.ar}
+        </p>
+        <p
+          className={styles.verseEnglish}
+          style={{
+            opacity: fade ? 1 : 0,
+            transform: fade ? "translateY(0)" : "translateY(12px)",
+            transition: "opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s",
+          }}
+        >
+          {v.en || defaultVerses[current]?.en}
+        </p>
+        <p
+          className={styles.verseRef}
+          style={{
+            opacity: fade ? 1 : 0,
+            transition: "opacity 0.6s ease 0.2s",
+          }}
+        >
+          {v.ref || defaultVerses[current]?.ref}
+        </p>
+
+        {/* Navigation dots */}
+        <div className={styles.verseNav}>
+          {verses.map((_, i) => (
+            <button
+              key={i}
+              className={`${styles.vDot} ${i === current ? styles.vDotActive : ""}`}
+              onClick={() => goTo(i)}
+              aria-label={`Verse ${i + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* ── 3D Phone Cluster (BELOW VERSE) ── */}
+      <div className={styles.phonePond}>
+        <div className={`${styles.pondPhone} ${styles.left}`}>
+          <div className={styles.phoneNotch}></div>
+          <img
+            src={getPhoneImage(v.phone_image_1, defaultPhoneOne)}
+            alt="Basirah TV Splash Screen"
+            draggable={false}
+          />
+        </div>
+        <div className={`${styles.pondPhone} ${styles.center}`}>
+          <div className={styles.phoneNotch}></div>
+          <img 
+            src={getPhoneImage(v.phone_image_2, defaultPhoneTwo)} 
+            alt="Basirah TV Library" 
+            draggable={false} 
+          />
+        </div>
+        <div className={`${styles.pondPhone} ${styles.right}`}>
+          <div className={styles.phoneNotch}></div>
+          <img
+            src={getPhoneImage(v.phone_image_3, defaultPhoneThree)}
+            alt="Basirah TV My Learning"
+            draggable={false}
+          />
+        </div>
+      </div>
+
+      {/* ── CTA Buttons ── */}
+      <div className={styles.heroCta}>
+        <a href="#youtube" className={`${styles.ctaPill} ${styles.primary}`}>
+          Explore Courses
+        </a>
+        <a href="#promote" className={`${styles.ctaPill} ${styles.ghost}`}>
+          Download App
+        </a>
+      </div>
+
+      {/* ── Scroll Hint ── */}
+      <div className={styles.scrollHint}>
+        <span>Scroll</span>
+        <div className={styles.scrollLine}></div>
+      </div>
+
+      {/* ── Bottom Curve Wave Separator ── */}
+      <div className={styles.bottomCurveWave}>
+        <svg
+          viewBox="0 0 1440 50"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={styles.waveSvg}
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0 C480,45 960,45 1440,0 V50 H0 Z"
+            fill="#ffffff"
+          />
+        </svg>
       </div>
     </section>
   );

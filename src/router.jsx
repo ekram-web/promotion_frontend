@@ -8,8 +8,6 @@ function AppRouter() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-      
-      
       </Routes>
     </Router>
   );

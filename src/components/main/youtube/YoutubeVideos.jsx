@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaTimes } from "react-icons/fa";
+import { motion } from "framer-motion";
 import styles from "./Youtube.module.css";
 import { fetchYoutubeVideos } from '../../../api/youtube';
 
@@ -11,16 +12,8 @@ function chunkArray(array, size) {
   return result;
 }
 
-// Helper to detect if a video is a YouTube Short
-function isShortVideo(video) {
-  if (!video || !video.snippet) return false;
-  // Check for #shorts in title (case-insensitive)
-  return video.snippet.title.toLowerCase().includes("#shorts");
-}
-
 function YoutubeVideos() {
   const [videos, setVideos] = useState([]);
-  const [sortOption, setSortOption] = useState("date");
   const [loading, setLoading] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
@@ -34,51 +27,43 @@ function YoutubeVideos() {
       .catch(() => setLoading(false));
   }, []);
 
-  const handleVideoClick = (video) => {
-    setSelectedVideo(video);
-  };
-
   const handleCloseVideo = () => {
     setSelectedVideo(null);
   };
 
-  const handleSortChange = (e) => {
-    setSortOption(e.target.value);
-  };
-
-  // Group videos into rows of 3
-  // const videoRows = chunkArray(videos, 3);
-
-  // Limit to 6 videos and chunk into 2 rows of 3
   const limitedVideos = videos.slice(0, 6);
   const videoRows = chunkArray(limitedVideos, 3);
 
   return (
-    <section className={styles.youtubeSection}>
+    <section className={styles.youtubeSection} id="youtube">
       <div className={styles.youtubeContainer}>
         {/* Header */}
-        <div className={styles.youtubeHeader}>
-          <h2 className={styles.youtubeTitle}>Latest Videos</h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className={styles.youtubeHeader}
+        >
+          <div className={styles.badge}>LATEST MEDIA</div>
+          <h2 className={styles.youtubeTitle}>Featured Video Lectures & Lessons</h2>
           <p className={styles.youtubeSubtitle}>
-            Discover our latest content and stay updated with our newest videos
+            Watch our latest Qur'anic reflections, tajweed guides, and institute announcements.
           </p>
-        </div>
-
-        {/* Filter */}
+        </motion.div>
 
         {/* Loading State */}
         {loading && (
           <div className={styles.loadingContainer}>
             <div className={styles.spinner}></div>
-            <p>Loading videos...</p>
+            <p>Loading latest media...</p>
           </div>
         )}
 
         {/* Video Grid in Rows */}
         {!loading && videos.length > 0 && (
-          <div>
+          <div className={styles.rowsWrapper}>
             {videoRows.map((row, rowIndex) => {
-              // Check if selectedVideo is in this row
               const isSelectedInRow =
                 selectedVideo &&
                 row.some((v) => v.id === selectedVideo.id);
@@ -110,47 +95,29 @@ function YoutubeVideos() {
                       </div>
                     ))}
                   </div>
-                  {/* Video Player below the row if selected video is in this row */}
+
+                  {/* Inline Expanded Player */}
                   {isSelectedInRow && selectedVideo && (
-                    <div className={styles.videoPlayerRowWrapper}>
-                      <div
-                        style={{
-                          padding: "40px 0",
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          background: "#111",
-                          position: "relative"
-                        }}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className={styles.videoPlayerRowWrapper}
+                    >
+                      <button
+                        className={styles.closeButton}
+                        onClick={handleCloseVideo}
+                        aria-label="Close video"
                       >
-                        <button
-                          className={styles.closeButton}
-                          style={{
-                            position: "absolute",
-                            top: 10,
-                            right: 10,
-                            zIndex: 2
-                          }}
-                          onClick={handleCloseVideo}
-                          aria-label="Close video"
-                        >
-                          ×
-                        </button>
-                        <iframe
-                          width="900"
-                          height="390"
-                          src={`https://www.youtube.com/embed/${selectedVideo.id}`}
-                          title={selectedVideo.title}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          style={{
-                            maxWidth: "100%",
-                            border: "none",
-                            background: "#111",
-                          }}
-                        ></iframe>
-                      </div>
-                    </div>
+                        <FaTimes /> Close Video
+                      </button>
+                      <iframe
+                        src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
+                        title={selectedVideo.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className={styles.embedFrame}
+                      ></iframe>
+                    </motion.div>
                   )}
                 </React.Fragment>
               );
@@ -158,10 +125,10 @@ function YoutubeVideos() {
           </div>
         )}
 
-        {/* No Videos State */}
+        {/* Empty State */}
         {!loading && videos.length === 0 && (
           <div className={styles.loadingContainer}>
-            <p>No videos found. Please try a different filter option.</p>
+            <p>No video lectures available at the moment.</p>
           </div>
         )}
       </div>
@@ -169,6 +136,6 @@ function YoutubeVideos() {
   );
 }
 
-export default YoutubeVideos;
+export default YoutubeVideos;;
 
 

@@ -1,14 +1,112 @@
-html, body {
+:root {
+  /* Brand Color Palette */
+  --color-navy-dark: #041836;
+  --color-navy-deep: #020e22;
+  --color-navy-card: #092248;
+  --color-navy-light: #0d2e5c;
+  
+  --color-teal-primary: #00d09c;
+  --color-teal-hover: #00b587;
+  --color-teal-dark: #019873;
+  --color-teal-soft: #e6faf5;
+  --color-teal-glow: rgba(0, 208, 156, 0.25);
+  
+  --color-bg-light: #f8fafc;
+  --color-surface-white: #ffffff;
+  --color-border-light: #e2e8f0;
+  --color-border-glass: rgba(255, 255, 255, 0.12);
+  
+  --color-text-dark: #0b192c;
+  --color-text-muted: #475569;
+  --color-text-light: #94a3b8;
+  --color-text-white: #ffffff;
+
+  /* Typography Tokens */
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Elevation & Shadows */
+  --shadow-sm: 0 2px 4px rgba(4, 24, 54, 0.04);
+  --shadow-md: 0 6px 16px rgba(4, 24, 54, 0.08);
+  --shadow-lg: 0 12px 32px rgba(4, 24, 54, 0.12);
+  --shadow-teal: 0 10px 25px rgba(0, 208, 156, 0.3);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.18);
+
+  /* Border Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--color-text-dark);
+  background-color: var(--color-bg-light);
   overflow-x: hidden;
-  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-heading);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-navy-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-navy-light);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-teal-primary);
 }

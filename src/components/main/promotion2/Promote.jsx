@@ -1,374 +1,164 @@
-// import React, { useEffect, useState } from "react";
-// import styles from "./promote.module.css";
-// import phoImg from "../../../assets/images/pho.png";
-// import qrImg from "../../../assets/images/qr.jpg";
-// import skylinkLogo from "../../../assets/skylink.svg";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// import Img1 from "../../../assets/images/home.jpg";
-// import Img2 from "../../../assets/images/Basirah app splash page 5 copy 2@4x.png";
-// import Img3 from "../../../assets/images/Basirah app splash page 5 copy 6@4x.png";
-// import { fetchPromotions } from "../../../api/promotion";
-// import { faAndroid, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
-// function Promotion() {
-//   // Placeholder screen images (replace with real ones later)
-//   const screenImages = [Img1, Img2, Img3];
-//   const [currentScreen, setCurrentScreen] = useState(0);
-//   const [isRotating, setIsRotating] = useState(false);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setIsRotating(true);
-//       setTimeout(() => {
-//         setCurrentScreen((prev) => (prev + 1) % screenImages.length);
-//         setIsRotating(false);
-//       }, 900); // match animation duration
-//     }, 2500);
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   const [promotion, setPromotion] = useState(null);
-
-//   // Fetch promotion data from API
-//   useEffect(() => {
-//     fetchPromotions()
-//       .then((res) => {
-//         // If you expect an array, use res.data[0]
-//         setPromotion(Array.isArray(res.data) ? res.data[0] : res.data);
-//       })
-//       .catch(() => setPromotion(null));
-//   }, []);
-
-//   return (
-//     <section className={styles.promotionBest} id="app">
-//       <div className={styles.leftSection}>
-//         <div
-//           className={`${styles.frame} ${isRotating ? styles.rotate : ""}`}
-//           style={{ width: 220, height: 440 }}
-//         >
-//           <div className={styles.frameInner}>
-//             <img
-//               // src={
-//               //   promotion && promotion.phone_image
-//               //     ? `http://localhost:8000/storage/${promotion.phone_image}`
-//               //     : screenImages[currentScreen]
-//               // }
-
-//               src={
-//                 promotion && promotion.phone_image
-//                   ? `https://besirad.basirahtv.com/storage/${promotion.phone_image}`
-//                   : screenImages[currentScreen]
-//               }
-//               alt="App screen"
-//               className={styles.frameImage}
-//               onError={(e) => {
-//                 e.target.onerror = null;
-//                 e.target.src = screenImages[currentScreen];
-//               }}
-//             />
-//           </div>
-//         </div>
-//         <div className={styles.poweredBySkylink}>
-//           <span>Powered by</span>
-//           <img
-//             src={skylinkLogo}
-//             alt="Skylink logo"
-//             className={styles.skylinkLogo}
-//           />
-//         </div>
-//       </div>
-//       <div className={styles.promoRight}>
-//         <h2
-//           className={styles.promoHeadline}
-//           style={{ fontFamily: "'Merriweather', serif", fontWeight: "600" }}
-//         >
-//           {promotion ? promotion.title : "Get the Basirah App"}
-//         </h2>
-//         <div
-//           className={styles.promoBenefit}
-//           style={{ fontFamily: "'Inter', sans-serif", fontWeight: "400" }}
-//         >
-//           {promotion
-//             ? promotion.subtitle ||
-//               "Experience seamless learning and teaching—anytime, anywhere."
-//             : "Experience seamless learning and teaching—anytime, anywhere."}
-//         </div>
-//         <div className={styles.downloadRow}>
-//           <div
-//             style={{
-//               display: "flex",
-//               flexDirection: "column",
-//               alignItems: "center",
-//             }}
-//           >
-//             <a
-//               href={
-//                 promotion
-//                   ? promotion.app_store_url
-//                   : "https://www.dropbox.com/scl/fi/fhpf52av4xbxg1smmn7kq/Basirah.apk?rlkey=mmoie793l1hdufsefwwaudzit&st=gv5sdsyp&dl=1"
-//               }
-//               target="_blank"
-//               rel="noopener noreferrer"
-//               className={styles.promoDownloadBtn}
-//               download="Basirah.apk"
-//               // arial-disabled="true"
-//             >
-//               <FontAwesomeIcon
-//                 icon={faAndroid}
-//                 className={styles.promoBtnIcon}
-//               />
-//               APK
-//             </a>
-
-//             <div className={styles.qrContainerSmall}>
-//               <img
-//                 src={
-//                   promotion && promotion.qr_code_image
-//                     ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image}`
-//                     : qrImg
-//                 }
-//                 alt="Download Basirah App QR"
-//                 className={styles.qrImageSmall}
-//                 onError={(e) => {
-//                   e.target.onerror = null;
-//                   e.target.src = qrImg;
-//                 }}
-//               />
-//               <div className={styles.qrLabelSmall}>Scan</div>
-//             </div>
-//           </div>
-
-//           <div
-//             style={{
-//               display: "flex",
-//               flexDirection: "column",
-//               alignItems: "center",
-//             }}
-//           >
-//             <a
-//               href={
-//                 promotion ? promotion.play_store_url : "https://apps.apple.com/"
-//               }
-//               target="_blank"
-//               rel="noopener noreferrer"
-//               className={styles.promoDownloadBtn}
-//             >
-//               <FontAwesomeIcon
-//                 icon={faGooglePlay}
-//                 className={styles.promoBtnIcon}
-//               />
-//               Play Store
-//             </a>
-//             <div className={styles.qrContainerSmall}>
-//               <div className={styles.qrImageSmallBlurred}>
-//                 <img
-//                   // src={
-//                   //   promotion && (promotion.qr_code_image_playstore || promotion.qr_code_image)
-//                   // //    ? `http://localhost:8000/storage/${promotion.qr_code_image_playstore || promotion.qr_code_image}`
-//                   //     : qrImg
-//                   // }
-
-//                   src={
-//                     promotion &&
-//                     (promotion.qr_code_image_playstore ||
-//                       promotion.qr_code_image)
-//                       ? `https://besirad.basirahtv.com/storage/${
-//                           promotion.qr_code_image_playstore ||
-//                           promotion.qr_code_image
-//                         }`
-//                       : qrImg
-//                   }
-//                   alt="Download Basirah App QR for Play Store"
-//                   className={styles.qrImageSmall}
-//                   onError={(e) => {
-//                     e.target.onerror = null;
-//                     e.target.src = qrImg;
-//                   }}
-//                 />
-//                 <div className={styles.qrOverlay}>
-//                   <span>Coming soon</span>
-//                 </div>
-//               </div>
-//               <div className={styles.qrLabelSmall}>Scan</div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-// export default Promotion;
-
-// ??
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import styles from "./promote.module.css";
-
-// Your asset imports
 import qrImg from "../../../assets/images/qr.jpg";
-import skylinkLogo from "../../../assets/skylink.svg";
+import skylink from "../../../assets/images/logo.png";
+import realPhoneFrame from "../../../assets/images/real_phone_frame_clean.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAndroid, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
+import { faApple, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import { fetchPromotions } from "../../../api/promotion";
-
-// CORRECT: Importing the video from your assets folder
 import promoVideo from "../../../assets/video.mp4";
+import { FaStar, FaVideo, FaDownload, FaCheckCircle } from "react-icons/fa";
 
 function Promotion() {
-  // RESTORED: The state for your backend data is back
   const [promotion, setPromotion] = useState(null);
 
-  // RESTORED: The useEffect to fetch data from your API is back
   useEffect(() => {
     fetchPromotions()
       .then((res) => {
         setPromotion(Array.isArray(res.data) ? res.data[0] : res.data);
       })
       .catch(() => setPromotion(null));
-  }, []); // The empty array [] means this runs only once when the component loads
+  }, []);
 
   return (
-    <section className={styles.promotionBest} id="app">
-      <div className={styles.leftSection}>
-        {/* The frame is stable with no animation */}
-        <div className={styles.frame} style={{ width: 220, height: 440 }}>
-          <div className={styles.frameInner}>
-            {/* WORKING: The video tag using the imported video file */}
-            <video
-              className={styles.frameImage}
-              src={promoVideo}
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-          </div>
-        </div>
-        <div className={styles.poweredBySkylink}>
-          <span>Powered by</span>
-          <img
-            src={skylinkLogo}
-            alt="Skylink logo"
-            className={styles.skylinkLogo}
-          />
-        </div>
-      </div>
+    <section className={styles.promotionSection} id="promote">
+      {/* Background Ambient Orbs */}
+      <div className={styles.orbLeft} />
+      <div className={styles.orbRight} />
 
-      <div className={styles.promoRight}>
-        {/* RESTORED: Headline now uses data from the backend */}
-        <h2
-          className={styles.promoHeadline}
-          style={{ fontFamily: "'Merriweather', serif", fontWeight: "600" }}
+      <div className={styles.container}>
+        {/* Left Column: Headlines & Integrated Dual Glass Cards */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className={styles.promoLeft}
         >
-          {promotion ? promotion.title : "Get the Basirah App"}
-        </h2>
-        {/* RESTORED: Subtitle now uses data from the backend */}
-        <div
-          className={styles.promoBenefit}
-          style={{ fontFamily: "'Inter', sans-serif", fontWeight: "400" }}
-        >
-          {promotion
-            ? promotion.subtitle ||
-              "Experience seamless learning and teaching—anytime, anywhere."
-            : "Experience seamless learning and teaching—anytime, anywhere."}
-        </div>
-        <div className={styles.downloadRow}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {/* RESTORED: Download link now uses data from the backend */}
+          <div className={styles.sectionBadge}>
+            <span className={styles.pulseDot} />
+            <span>MOBILE EXPERIENCE</span>
+          </div>
+
+          <h2 className={styles.promoHeadline}>
+            Learn Qur'an on the Go with{" "}
+            <span className={styles.gradientAccent}>Basirah App</span>
+          </h2>
+
+          <p className={styles.promoBenefit}>
+            {promotion
+              ? promotion.subtitle ||
+                "Experience seamless learning, live circles, and offline Quran recitation tracking anytime, anywhere."
+              : "Experience seamless learning, live circles, and offline Quran recitation tracking anytime, anywhere."}
+          </p>
+
+          <div className={styles.downloadCardRow}>
+            {/* Card 1: Google Play */}
             <a
               href={
                 promotion
-                  ? promotion.app_store_url
-                  : "https://www.dropbox.com/scl/fi/fhpf52av4xbxg1smmn7kq/Basirah.apk?rlkey=mmoie793l1hdufsefwwaudzit&st=gv5sdsyp&dl=1"
+                  ? promotion.play_store_url
+                  : "https://play.google.com/store/apps/details?id=com.basirahtv.app"
               }
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.promoDownloadBtn}
-              download="Basirah.apk"
-            >
-              <FontAwesomeIcon
-                icon={faAndroid}
-                className={styles.promoBtnIcon}
-              />
-              APK
-            </a>
-
-            {/* RESTORED: QR Code now uses data from the backend */}
-            <div className={styles.qrContainerSmall}>
-              <img
-                src={
-                  promotion && promotion.qr_code_image
-                    ? `https://besirad.basirahtv.com/storage/${promotion.qr_code_image}`
-                    : qrImg
-                }
-                alt="Download Basirah App QR"
-                className={styles.qrImageSmall}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = qrImg;
-                }}
-              />
-              <div className={styles.qrLabelSmall}>Scan</div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {/* RESTORED: Play Store link now uses data from the backend */}
-            <a
-              href={
-                promotion ? promotion.play_store_url : "https://apps.apple.com/"
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.promoDownloadBtn}
+              className={styles.appBadgeBtn}
             >
               <FontAwesomeIcon
                 icon={faGooglePlay}
-                className={styles.promoBtnIcon}
+                className={styles.badgeCardIcon}
               />
-              Play Store
-            </a>
-            {/* RESTORED: Play Store QR Code now uses data from the backend */}
-            <div className={styles.qrContainerSmall}>
-              <div className={styles.qrImageSmallBlurred}>
-                <img
-                  src={
-                    promotion &&
-                    (promotion.qr_code_image_playstore ||
-                      promotion.qr_code_image)
-                      ? `https://besirad.basirahtv.com/storage/${
-                          promotion.qr_code_image_playstore ||
-                          promotion.qr_code_image
-                        }`
-                      : qrImg
-                  }
-                  alt="Download Basirah App QR for Play Store"
-                  className={styles.qrImageSmall}
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = qrImg;
-                  }}
-                />
-                <div className={styles.qrOverlay}>
-                  <span>Coming soon</span>
+              <div className={styles.badgeTextCol}>
+                <div className={styles.badgeTitleRow}>
+                  <span className={styles.badgeMainText}>Google Play</span>
+                  <FaDownload className={styles.badgeDlIcon} />
                 </div>
+                <span className={styles.badgeSubText}>Tap to install</span>
               </div>
-              <div className={styles.qrLabelSmall}>Scan</div>
+            </a>
+
+            {/* Card 2: App Store (Coming Soon) */}
+            <div className={`${styles.appBadgeBtn} ${styles.disabledBadge}`}>
+              <div className={styles.comingSoonFloating}>Soon</div>
+              <FontAwesomeIcon
+                icon={faApple}
+                className={styles.badgeCardIconWhite}
+              />
+              <div className={styles.badgeTextCol}>
+                <div className={styles.badgeTitleRow}>
+                  <span className={styles.badgeMainText}>App Store</span>
+                </div>
+                <span className={styles.badgeSubText}>Coming Soon</span>
+              </div>
             </div>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Right Column: Real Phone Mockup Frame Overlay & 3 Scattered Pills */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className={styles.promoRight}
+        >
+          <div className={styles.orbitStage}>
+            {/* Top Pills Group (Mobile Flex Row / Desktop Orbit) */}
+            <div className={styles.topPillGroup}>
+              {/* Top-Left Scattered Floating Pill */}
+              <div className={`${styles.orbitPill} ${styles.pillTopLeft}`}>
+                <FaVideo className={styles.orbitPillIcon} />
+                <span className={styles.orbitPillText}>
+                  Live Recitation Feedback
+                </span>
+              </div>
+
+              {/* Top-Right Scattered Floating Pill */}
+              <div className={`${styles.orbitPill} ${styles.pillTopRight}`}>
+                <FaStar
+                  className={styles.orbitPillIcon}
+                  style={{ color: "#ffc107" }}
+                />
+                <span className={styles.orbitPillText}>4.9 ★ Rated App</span>
+              </div>
+            </div>
+
+            {/* Real Phone Mockup Frame Overlay Container */}
+            <div className={styles.phoneMockupContainer}>
+              <video
+                className={styles.videoInsideMockup}
+                src={promoVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <img
+                src={realPhoneFrame}
+                alt="Basirah Phone Mockup Frame"
+                className={styles.phoneMockupOverlay}
+              />
+            </div>
+
+            {/* Bottom-Right Scattered Floating Pill */}
+            <div className={`${styles.orbitPill} ${styles.pillBottomRight}`}>
+              <FaCheckCircle className={styles.orbitPillIcon} />
+              <span className={styles.orbitPillText}>
+                Offline Progress Tracking
+              </span>
+            </div>
+          </div>
+
+          <div className={styles.poweredBySkylink}>
+            <span>Powered by</span>
+            <img
+              src={skylink}
+              alt="Skylink logo"
+              className={styles.skylinkLogo}
+            />
+          </div>
+        </motion.div>
       </div>
     </section>
   );

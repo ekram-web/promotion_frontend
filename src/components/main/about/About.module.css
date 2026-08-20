@@ -1,97 +1,223 @@
+/* ═══════════════════════════════════════════════════
+   ABOUT SECTION — Compact, Elegant, Mobile Responsive
+   ═══════════════════════════════════════════════════ */
+
 .aboutSection {
-  background: linear-gradient(120deg, #f7fafd 60%, #e0f7f4 100%);
-  padding: 4rem 1rem 3rem 1rem;
-  min-height: 420px;
+  background: #ffffff;
+  padding: 4rem 1.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+  color: #2d3748;
+  scroll-margin-top: 80px;
 }
 
-.aboutLayout {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: space-between;
-  position: relative;
-  min-height: 420px;
-  max-width: 1200px;
+.container {
+  max-width: 1140px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
-.aboutImageBox {
-  flex: 0 0 45%;
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-start;
+/* Left: Compact Portrait Frame */
+.imageWrapper {
   position: relative;
-  height: 100%;
+  display: flex;
+  justify-content: center;
 }
+
+.archedCard {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 140px 140px 20px 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(4, 32, 72, 0.1), 0 0 20px rgba(20, 184, 128, 0.08);
+  border: 1.5px solid rgba(20, 184, 128, 0.2);
+  background: #ffffff;
+}
+
 .aboutImage {
   width: 100%;
-  height: 100%;
-  max-width: 420px;
-  border-radius: 12px;
+  height: 400px;
   object-fit: cover;
-  box-shadow: 0 4px 32px #00c89422;
-  min-height: 420px;
+  object-position: center 15%; /* Scholar face/head is centered and never clipped */
+  display: block;
+  transition: transform 0.6s ease;
 }
 
-.aboutLogoOverlay {
+.archedCard:hover .aboutImage {
+  transform: scale(1.03);
+}
+
+.imageOverlayGlow {
   position: absolute;
-  left: 18px;
-  bottom: 18px;
-  background: rgba(255, 255, 255, 0.85);
+  inset: 0;
+  background: linear-gradient(180deg, transparent 70%, rgba(4, 32, 72, 0.45) 100%);
+  pointer-events: none;
+}
+
+.badgeOverlay {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.8rem 1.1rem;
   border-radius: 14px;
-  box-shadow: 0 4px 24px #00c89433;
-  padding: 10px 16px 10px 14px;
+  border: 1px solid rgba(20, 184, 128, 0.25);
+  box-shadow: 0 8px 20px rgba(4, 32, 72, 0.08);
   display: flex;
   align-items: center;
+  gap: 0.8rem;
 }
-.aboutLogo {
-  width: 48px;
-  opacity: 0.85;
-  filter: drop-shadow(0 2px 8px #00c89433);
+
+.badgeLogo {
+  width: 30px;
+  height: auto;
+}
+
+.badgeTitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #042048;
   margin: 0;
 }
 
-.aboutTextBox {
-  flex: 1 1 55%;
+.badgeSub {
+  font-size: 0.72rem;
+  color: #0d8a5e;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Right: Clean Narrative & Features */
+.contentBox {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  padding-left: 2.5rem;
-  padding-top: 2.5rem;
 }
-.aboutTitle {
-  font-size: 2.8rem;
 
+.subTag {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  background: rgba(20, 184, 128, 0.08);
+  border: 1px solid rgba(20, 184, 128, 0.25);
+  color: #0d8a5e;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  color: #231f20;
-  margin-bottom: 2.5rem;
-}
-.aboutText {
-  font-size: 1.18rem;
-  color: #231f20cc;
-  line-height: 1.7;
-  max-width: 520px;
-  text-align: justify;
+  letter-spacing: 0.1em;
+  border-radius: 100px;
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 900px) {
-  .aboutLayout {
-    flex-direction: column;
-    align-items: center;
-    min-height: 0;
-    padding-bottom: 3.5rem;
+.mainTitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #042048;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  font-family: "Inter", sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #4a5568;
+  margin-bottom: 1.8rem;
+}
+
+/* Sleek Feature Bullets */
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(4, 32, 72, 0.06);
+}
+
+.featureItem:last-child {
+  border-bottom: none;
+}
+
+.featureIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(20, 184, 128, 0.1);
+  border: 1px solid rgba(20, 184, 128, 0.25);
+  color: #0d8a5e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.featureInfo h4 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #042048;
+  margin: 0 0 0.2rem 0;
+}
+
+.featureInfo p {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.45;
+}
+
+@media (max-width: 992px) {
+  .aboutSection {
+    padding: 3.5rem 1.2rem 2.5rem;
   }
-  .aboutImageBox {
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 2rem;
+  .container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
-  .aboutTextBox {
-    padding-left: 0;
-    padding-top: 0;
-    align-items: center;
-    text-align: center;
+  .mainTitle {
+    font-size: 1.8rem;
+  }
+  .aboutImage {
+    height: 320px;
+  }
+}
+
+@media (max-width: 576px) {
+  .aboutSection {
+    padding: 2.8rem 1rem 2rem;
+  }
+  .archedCard {
+    max-width: 280px;
+    border-radius: 100px 100px 16px 16px;
+  }
+  .aboutImage {
+    height: 270px;
+  }
+  .mainTitle {
+    font-size: 1.55rem;
+  }
+  .description {
+    font-size: 0.9rem;
   }
 }

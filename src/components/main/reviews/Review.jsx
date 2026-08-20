@@ -1,87 +1,75 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import styles from "./Review.module.css";
 import ustazImg from "../../../assets/images/ustaz/ustaz_k.png";
 import { fetchReviews } from "../../../api/reviews";
+import { FaStar, FaQuoteLeft } from "react-icons/fa";
+import skylink from "../../../assets/images/logo.png";
+import basirahLogo from "../../../assets/images/Basirah Full Color Transparent.png";
 
-// Fallback reviews in case API fails
 const fallbackReviews = [
   {
     name: "Fatima Ali",
     role: "Student",
-    text: "Basirah Institute has transformed my understanding of the Qur'an. The resources and teachers are amazing!",
+    text: "Basirah has transformed my Qur'anic journey. The lessons and certified scholars are truly outstanding!",
     img: ustazImg,
   },
   {
     name: "Dr. Ahmed Yusuf",
-    role: "Scholar",
-    text: "A wonderful platform for both beginners and advanced learners. Highly recommended for anyone seeking knowledge.",
+    role: "Islamic Scholar",
+    text: "A wonderful platform for beginners and advanced students. Highly recommended for authentic knowledge.",
     img: ustazImg,
   },
   {
     name: "Mohammed Salim",
     role: "Parent",
-    text: "My children love the interactive lessons. The app is easy to use and very educational.",
+    text: "My children love the lessons. Intuitive, educational, and a true blessing for our family.",
     img: ustazImg,
   },
   {
     name: "Aisha Noor",
-    role: "Teacher",
-    text: "The app's features make teaching so much easier and more interactive. My students are more engaged than ever!",
+    role: "Qur'an Teacher",
+    text: "Tracking student progress is seamless. My students are more motivated and consistent than ever!",
     img: ustazImg,
   },
   {
-    name: "Omar Khalid",
-    role: "Student",
-    text: "I love the live classes and the supportive community. Basirah is the best!",
+    name: "Yusuf Ibrahim",
+    role: "University Student",
+    text: "The tajweed lessons are exceptional. I feel genuine improvement in my recitation every session.",
     img: ustazImg,
   },
   {
-    name: "Layla Hassan",
-    role: "Parent",
-    text: "Basirah's resources are top-notch. My kids are learning so much!",
+    name: "Maryam Hassan",
+    role: "Community Member",
+    text: "Basirah connects hearts through the Qur'an. The scholar network feels like a true family.",
     img: ustazImg,
   },
 ];
 
-// function getCardsToShow() {
-//   if (window.innerWidth < 800) return 1;
-//   if (window.innerWidth < 1200) return 2;
-//   return 3;
-// }
-
-function getCardsToShow() {
-  return window.innerWidth < 800 ? 1 : 2;
-}
-
 function Review() {
-  const [cardsToShow, setCardsToShow] = useState(getCardsToShow());
-  const [index, setIndex] = useState(0);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const sliderRef = useRef(null);
-  const intervalRef = useRef(null);
 
-  useEffect(() => {
-    const handleResize = () => setCardsToShow(getCardsToShow());
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // fetch reviews from API
   useEffect(() => {
     fetchReviews()
       .then((res) => {
-        const transformedReviews = res.data.map((review) => ({
-          name: review.name,
-          role: review.role,
-          text: review.text,
-          img: review.image
-            // ? `http://localhost:8000/storage/${review.image}`
-            ? `https://besirad.basirahtv.com/storage/${review.image}`
-
-            : ustazImg,
-        }));
-        setReviews(transformedReviews);
+        if (res.data && res.data.length > 0) {
+          const apiReviews = res.data.map((rev) => ({
+            name: rev.name || "Anonymous",
+            role: rev.role || "Community Member",
+            text: rev.text || rev.content || "A wonderful experience with Basirah Institute.",
+            img: rev.image
+              ? `https://besirad.basirahtv.com/storage/${rev.image}`
+              : ustazImg,
+          }));
+          if (apiReviews.length < 6) {
+            setReviews([...apiReviews, ...fallbackReviews.slice(0, 6 - apiReviews.length)]);
+          } else {
+            setReviews(apiReviews);
+          }
+        } else {
+          setReviews(fallbackReviews);
+        }
         setLoading(false);
       })
       .catch(() => {
@@ -90,132 +78,120 @@ function Review() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   if (reviews.length === 0) return;
-  //   const interval = setInterval(() => {
-  //     setIndex((prev) => {
-  //       if (prev < reviews.length - cardsToShow) {
-  //         return prev + 1;
-  //       } else {
-  //         return 0;
-  //       }
-  //     });
-  //   }, 4000);
-  //   return () => clearInterval(interval);
-  // }, [cardsToShow, reviews.length]);
-
-  useEffect(() => {
-    // Clamp index if cardsToShow changes
-    if (index > reviews.length - cardsToShow) {
-      setIndex(Math.max(0, reviews.length - cardsToShow));
-    }
-  }, [cardsToShow, index]);
-
-  useEffect(() => {
-    startAutoSlide();
-    return () => clearInterval(intervalRef.current);
-  }, [cardsToShow, index]);
-
-  const startAutoSlide = () => {
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      handleNext();
-    }, 4000);
-  };
-
-  const handlePrev = () => {
-    setIndex((prev) => (prev <= 0 ? reviews.length - cardsToShow : prev - 1));
-    startAutoSlide();
-  };
-
-  const handleNext = () => {
-    setIndex((prev) => (prev >= reviews.length - cardsToShow ? 0 : prev + 1));
-    startAutoSlide();
-  };
-  // // Calculate the width and transform for the sliding effect
-  // const sliderWidth = `${(reviews.length * 100) / cardsToShow}%`;
-  // const cardWidth = `${100 / reviews.length}%`;
-  // const translateX = `-${index * (100 / cardsToShow)}%`;
-
-  // \||||||
-  // Slider width is (number of cards / cardsToShow) * 100%
-  const sliderWidth = `${(reviews.length / cardsToShow) * 100}%`;
-  // Each card takes up 100/reviews.length % of the visible area
-  const cardWidth = `${92 / reviews.length}%`;
-  // Move by one card width each time
-  const translateX = `-${index * (100 / reviews.length)}%`;
-
-  if (loading) {
-    return (
-      <section className={styles.reviewSection}>
-        <h2
-          className={styles.heading}
-          style={{ fontFamily: "'Merriweather', serif", fontWeight: "600" }}
-        >
-          What People Say About Us
-        </h2>
-        <div className={styles.reviews}>
-          <div className={styles.reviewCard}>
-            <div style={{ textAlign: "center", padding: "2rem" }}>
-              Loading reviews...
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const displayReviews = reviews.length > 0 ? reviews : fallbackReviews;
+  
+  // Double the arrays to create seamless infinite scrolling
+  const row1Reviews = [...displayReviews, ...displayReviews];
+  const row2Reviews = [...displayReviews.slice().reverse(), ...displayReviews.slice().reverse()];
 
   return (
-    <section className={styles.reviewSection}>
-      <h2 className={styles.heading}>What People Say About Us</h2>
-      <div className={styles.reviewsWrapper}>
-        <div
-          className={styles.slider}
-          style={{
-            width: sliderWidth,
-            transform: `translateX(${translateX})`,
-          }}
-        >
-          {reviews.map((review, idx) => (
-            <div
-              className={styles.reviewCard}
-              key={idx}
-              style={{ flex: `0 0 ${cardWidth}`, maxWidth: cardWidth }}
-            >
-              <img
-                src={review.img ? review.img : ustazImg}
-                alt={review.name}
-                className={styles.avatar}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = ustazImg;
-                }}
-              />
-              <p className={styles.text}>&ldquo;{review.text}&rdquo;</p>
-              <div className={styles.reviewer}>
-                <span className={styles.name}>{review.name}</span>
-                <span className={styles.role}>{review.role}</span>
+    <section className={styles.section} id="reviews">
+      {/* Background Ambient Orbs */}
+      <div className={styles.orbLeft} />
+      <div className={styles.orbRight} />
+
+      <div className={styles.layout}>
+
+        {/* ── Large phone background (centered) ── */}
+        <div className={styles.phoneArea}>
+          <motion.div
+            className={styles.phoneWrap}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className={styles.phoneScreen} />
+            <div className={styles.phoneContent}>
+              <img src={basirahLogo} alt="Basirah" className={styles.phoneLogo} />
+              <div className={styles.badge}>
+                <FaQuoteLeft size={9} /> TESTIMONIALS
+              </div>
+              <h2 className={styles.heading}>
+                What Our<br />Community Says
+              </h2>
+              <p className={styles.subtext}>
+                Hear from students, parents, and scholars growing with Basirah.
+              </p>
+            </div>
+            
+            {/* Skylink Logo tucked into the exposed bottom of the phone */}
+            <div className={styles.poweredBySkylink}>
+              <span>Powered by</span>
+              <img src={skylink} alt="Skylink logo" className={styles.skylinkLogo} />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ── Infinite Marquee Cards Overlay (Preserved Exact Animation) ── */}
+        {!loading && (
+          <div className={styles.cardsOverlay}>
+            
+            {/* Top Row Marquee (Scrolling Left) */}
+            <div className={styles.marqueeRow}>
+              <div className={styles.marqueeTrackLeft}>
+                {row1Reviews.map((rev, idx) => (
+                  <div key={idx} className={styles.card}>
+                    <div className={styles.cardTop}>
+                      <div className={styles.meta}>
+                        <span className={styles.name}>{rev.name}</span>
+                        <span className={styles.role}>{rev.role}</span>
+                      </div>
+                      <img
+                        src={rev.img}
+                        alt={rev.name}
+                        className={styles.avatar}
+                        onError={(e) => { e.target.onerror = null; e.target.src = ustazImg; }}
+                      />
+                    </div>
+
+                    {/* Star Rating Row */}
+                    <div className={styles.starsRow}>
+                      {[...Array(5)].map((_, s) => (
+                        <FaStar key={s} className={styles.starIcon} />
+                      ))}
+                    </div>
+
+                    <p className={styles.text}>"{rev.text}"</p>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-      {/* navigation arrow */}
-      <div className={styles.arrowDiv}>
-        <button
-          className={`${styles.arrowBtn} ${styles.leftArrow}`}
-          onClick={handlePrev}
-          aria-label="Previous reviews"
-        >
-          &#8592;
-        </button>
-        <button
-          className={`${styles.arrowBtn} ${styles.rightArrow}`}
-          onClick={handleNext}
-          aria-label="Next reviews"
-        >
-          &#8594;
-        </button>
+
+            {/* Bottom Row Marquee (Scrolling Right) */}
+            <div className={styles.marqueeRow}>
+              <div className={styles.marqueeTrackRight}>
+                {row2Reviews.map((rev, idx) => (
+                  <div key={idx} className={styles.card}>
+                    <div className={styles.cardTop}>
+                      <div className={styles.meta}>
+                        <span className={styles.name}>{rev.name}</span>
+                        <span className={styles.role}>{rev.role}</span>
+                      </div>
+                      <img
+                        src={rev.img}
+                        alt={rev.name}
+                        className={styles.avatar}
+                        onError={(e) => { e.target.onerror = null; e.target.src = ustazImg; }}
+                      />
+                    </div>
+
+                    {/* Star Rating Row */}
+                    <div className={styles.starsRow}>
+                      {[...Array(5)].map((_, s) => (
+                        <FaStar key={s} className={styles.starIcon} />
+                      ))}
+                    </div>
+
+                    <p className={styles.text}>"{rev.text}"</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        )}
+
       </div>
     </section>
   );
